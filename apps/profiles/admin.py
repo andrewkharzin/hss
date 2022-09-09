@@ -7,8 +7,27 @@ from apps.profiles.models import Profile
 class ProfileAdmin(admin.ModelAdmin):
     list_display = [
         'user',
-        'agent',
+        'first_name',
+        'last_name',
+        'phone_number',
+        'email',
+        'position',
+        'thumbnail_preview',
+
     ]
+
+    readonly_fields = ('thumbnail_preview',)
+
+    def thumbnail_preview(self, obj):
+        return obj.thumbnail_preview
+
+    thumbnail_preview.short_description = 'Thumbnail Preview'
+    thumbnail_preview.allow_tags = True
+
+
+
+
+    
 
 
 admin.site.register(Profile, ProfileAdmin)

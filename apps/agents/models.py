@@ -2,7 +2,7 @@ from django.db import models
 from apps.users.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from phonenumber_field.modelfields import PhoneNumberField
+
 from apps.agents.utils import unique_order_id_generator
 from django.db.models.signals import pre_save
 from django.utils.translation import gettext_lazy as _
@@ -12,21 +12,14 @@ from django.utils.translation import gettext_lazy as _
 
 class Agent(models.Model):
 
-    class Company(models.TextChoices):
-        NW_TECHNIC = 'NW_TECH', _('Nord Avia Technics')
-        AEROFLOT_DTO = 'AFL_TDO', _('Aeroflot Technics Directions')
-        SKY_TECHNIK = 'SKY_TECH', _('Sky technik')
-        UNSIGN = 'UNSiGN', _('UNSIGN')
     user = models.OneToOneField(User, verbose_name=_(
         "user_agent"), on_delete=models.CASCADE)
     agent_id = models.CharField(max_length=15, null=True, blank=True)
-    agent_company = models.CharField(
-        _("Agent company"), choices=Company.choices, max_length=50, null=True, default=Company.UNSIGN)
-    phone_number = PhoneNumberField()
-    phone_number_mobile = PhoneNumberField()
+    # agent_company = models.CharField(
+    #     _("Agent company"), choices=Company.choices, max_length=50, null=True, default=Company.UNSIGN)
 
     def __str__(self):
-        return f"{'AG_ID/'}{self.agent_id.upper()}-{self.agent_company}"
+        return f"{self.agent_id.upper()} - {self.user.profile.first_name} {self.user.profile.last_name}"
 
 
 def pre_save_create_agent_id(sender, instance, *args, **kwargs):

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,23 +32,37 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+]
+
+THIRD_PARTY_APPS = [
     "rest_framework",
     "corsheaders",
     "rest_framework_simplejwt.token_blacklist",
     'phonenumber_field',
+    'django_telegram_login',
+    'sorl.thumbnail',
+]
+
+PROJECT_APPS = [
     "apps.users",
     "apps.ssr",
     'apps.profiles',
     'apps.orders',
     'apps.agents',
+    'apps.services',
+    'apps.stuffs',
+    'apps.organizations',
 ]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -129,18 +144,31 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
-    ],
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
 }
 
 CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:3000", "http://localhost:3000"]
+
+
+# ALLOWED_HOSTS = [
+#     "twenty-insects-float-94-25-172-151.loca.lt"
+# ]
+
+TELEGRAM_BOT_NAME = 'Hsrservice_Bot'
+TELEGRAM_BOT_TOKEN = '5431938630:AAHuSvhlcLqLmnlPWVFaqKc7_dK59hlqHTw'
+TELEGRAM_LOGIN_REDIRECT_URL = 'https://kqmxkdqitb.localtunnel.me/'
 
 # Custom user model
 AUTH_USER_MODEL = "users.User"

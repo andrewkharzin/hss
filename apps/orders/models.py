@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models.signals import post_save
-from apps.ssr.models import Request
+from apps.services.models import AogService
 from django.utils.translation import gettext_lazy as _
 import uuid
 
@@ -22,7 +22,8 @@ class Order(models.Model):
         COMPLETED = 'CPD', _('Order completed')
         REJECTED = 'RJD', _('Order rejected')
 
-    request = models.OneToOneField(Request, on_delete=models.CASCADE)
+    service = models.OneToOneField(
+        AogService, on_delete=models.CASCADE, default="")
     order_number = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
     # order_agent = models.ForeignKey(
@@ -36,17 +37,17 @@ class Order(models.Model):
     #     return f"{self.order_number}/{self.order_agent}/{self.request}/{self.order_createAt}/{self.order_updateAt}/{self.order_status}"
 
     def __str__(self):
-        return str(self.request)
+        return str(self.service)
 
 
 def create_order(sender, instance, created, **kwargs):
 
     if created:
-        Order.objects.create(request=instance)
+        Order.objects.create(service=instance)
         print('Order Created')
 
 
-post_save.connect(create_order, sender=Request)
+post_save.connect(create_order, sender=AogService)
 
 
 def update_order(sender, instance, created, **kwargs):
@@ -55,4 +56,4 @@ def update_order(sender, instance, created, **kwargs):
         print('Order Updated')
 
 
-post_save.connect(update_order, sender=Request)
+post_save.connect(update_order, sender=AogService)

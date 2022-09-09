@@ -1,5 +1,6 @@
 from django.db import models
 from apps.agents.models import Agent
+# from apps.services.migrations import
 
 from django.utils.translation import gettext_lazy as _
 
@@ -21,6 +22,8 @@ class Request(models.Model):
         ("send", "Send"),
     )
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
+    # service = models.OneToOneField(
+    #     "app.Model", verbose_name=_(""), on_delete=models.CASCADE)
     order_number = models.AutoField(primary_key=True)
     service_type = models.CharField(
         max_length=3, choices=OrderType.choices, default=OrderType.NEW)
