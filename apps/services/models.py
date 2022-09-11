@@ -1,9 +1,16 @@
 from django.db import models
+from apps.agents.models import Agent
 from django.utils.translation import gettext_lazy as _
 from apps.services.uuid import BaseUUID
 from apps.agents.models import Agent
 from apps.stuffs.models import Aog
-
+from django.shortcuts import reverse
+# from django.http import HttpResponseRedirect
+# from django.http import FileResponse
+# import io
+# from reportlab.pdfgen import canvas
+# from reportlab.lib.units import inch
+# from reportlab.lib.pagesizes import letter
 
 class BaseServiceRequest(BaseUUID):
     data_createAt = models.DateTimeField(
@@ -23,7 +30,8 @@ class BaseServiceRequest(BaseUUID):
 
 
 class AogService(BaseServiceRequest):
-
+    agent = models.ForeignKey(
+        Agent, related_name='agent_services_request', on_delete=models.CASCADE)
     aog_type = (
         ("loading", "Loading"),
         ("offloading", "Offloading"),
@@ -41,8 +49,28 @@ class AogService(BaseServiceRequest):
     flight_time = models.TimeField(
         _("Flight time"), auto_now=False, auto_now_add=False, null=True, blank=True)
     aog_item = models.ManyToManyField(Aog)
-    description = models.TextField()
-
+    fix_required = models.BooleanField(default=False)
+    starps_count = models.IntegerField(null=True, blank=True)
+    responsibles_persons = models.ManyToManyField(
+        'DutyPerson')
+    description = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return f" {self.service_name} / {self.service_date} / {self.aog_type.upper()} | {self.flight.upper()} | {self.agent}"
+
+
+    def get_absolute_url(self):
+        return reverse("AogService", kwargs={"pk": self.pk})
+
+
+
+    
+
+
+class DutyPerson(BaseUUID):
+    full_name = models.CharField(_("Full Name"), max_length=50)
+    position = models.CharField(_("Person position"), max_length=50)
+    contact_phone = models.CharField(_("Contact Phone"), max_length=12)
+
+    def __str__(self):
+        return self.full_name

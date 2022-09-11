@@ -1,5 +1,6 @@
 from django.contrib import admin
-from apps.services.models import AogService
+from apps.services.models import AogService, DutyPerson
+
 
 
 # class AogChangeList(ChangeList):
@@ -32,11 +33,14 @@ class AogServiceAdmin(admin.ModelAdmin):
 
     ]
 
-    # def get_changelist(self, request, **kwargs):
-    #     return AogChangeList
 
-    # def get_changelist_form(self, request, **kwargs):
-    #     return ServiceRequestItemListForm
+class DutyPersonAdmin(admin.ModelAdmin):
+    list_display = [
+        'full_name',
+        'position',
+        'contact_phone',
+    ]
 
 
 admin.site.register(AogService, AogServiceAdmin)
+admin.site.register(DutyPerson, DutyPersonAdmin)

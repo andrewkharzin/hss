@@ -19,7 +19,7 @@ class Agent(models.Model):
     #     _("Agent company"), choices=Company.choices, max_length=50, null=True, default=Company.UNSIGN)
 
     def __str__(self):
-        return f"{self.agent_id.upper()} - {self.user.profile.first_name} {self.user.profile.last_name}"
+        return f"{self.agent_id.upper()}"
 
 
 def pre_save_create_agent_id(sender, instance, *args, **kwargs):

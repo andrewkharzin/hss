@@ -14,7 +14,7 @@ class OrderAdmin(admin.ModelAdmin):
     ]
 
     list_display_links = [
-        'service'
+        'service',
     ]
 # Register your models here.
 
