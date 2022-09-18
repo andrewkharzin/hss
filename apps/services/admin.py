@@ -29,7 +29,7 @@ class AogServiceAdmin(admin.ModelAdmin):
         # 'get_changelist_form',
         'agent',
         'flight',
-        'aog_type',
+        'service_name',
 
     ]
 

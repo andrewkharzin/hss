@@ -143,6 +143,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://8000-andrewkharzin-hss-pq4jv1giif3.ws-eu64.gitpod.io"
+]
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 

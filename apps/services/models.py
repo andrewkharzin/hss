@@ -33,14 +33,13 @@ class AogService(BaseServiceRequest):
     agent = models.ForeignKey(
         Agent, related_name='agent_services_request', on_delete=models.CASCADE)
     aog_type = (
-        ("loading", "Loading"),
-        ("offloading", "Offloading"),
+        ("loading", "Loading Wheels"),
+        ("offloading", "Unloading Wheels"),
     )
     # service_item = models.ManyToManyField(
     #     Aog, related_name="aog_service_items")
-    service_name = models.CharField(
-        _("Service name"), max_length=50, blank=False, null=False)
-    aog_type = models.CharField(_("Type"), max_length=50, choices=aog_type)
+   
+    service_name = models.CharField(_("Service Name"), max_length=50, choices=aog_type)
     flight = models.CharField(_("Flight"), max_length=7)
     flight_ac_reg = models.CharField(
         _("AC Registration"), max_length=8, default='')
@@ -57,7 +56,11 @@ class AogService(BaseServiceRequest):
 
     def __str__(self):
         return f"{self.service_name}"
+    def __str__(self):
+        return self.get_service_name_display()
 
+    def get_name(request):
+        return responsibles_persons.full_name
 
     def get_absolute_url(self):
         return reverse("AogService", kwargs={"pk": self.pk})

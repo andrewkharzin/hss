@@ -7,7 +7,8 @@ from apps.agents.models import Agent
 
 @login_required(login_url="accounts:login")
 def order_analytics(request):
-    orders = Order.objects.filter()
+
+    orders = Order.objects.all().filter()
     aogs = AogService.objects.all()
     agents = Agent.objects.all()
 

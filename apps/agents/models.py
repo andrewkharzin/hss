@@ -34,7 +34,7 @@ class Agent(models.Model):
     def thumbnail_preview(self):
         if self.icon:
             _icon = get_thumbnail(
-                self.icon, "35", upscale=False, crop=False, quality=100
+                self.icon, "45", upscale=False, crop=False, quality=100
             )
             return format_html(
                 '<img src="{}" width="{}" height="{}">'.format(
