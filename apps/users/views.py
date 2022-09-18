@@ -1,34 +1,80 @@
-from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from .serializers import CustomUserSerializer
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import AllowAny
+import sweetify
+from apps.users.forms import CreateUserForm
+from django.contrib.auth.decorators import login_required
+
+from django.shortcuts import render, redirect
+
+# from django.http import HttpResponse
+# from django.forms import inlineformset_factory
+# from django.contrib.auth.forms import UserCreationForm
+
+from django.contrib.auth import authenticate, login, logout
+
+from django.contrib import messages
 
 
-class CustomUserCreate(APIView):
-    permission_classes = [AllowAny]
+def registerPage(request):
+    if request.user.is_authenticated:
+        return redirect("home")
+    else:
+        form = CreateUserForm()
+        if request.method == "POST":
+            form = CreateUserForm(request.POST)
+            if form.is_valid():
+                sweetify.success(
+                    request,
+                    "You did it",
+                    text="Good job! You successfully showed a SweetAlert message",
+                    persistent="Hell yeah",
+                )
+                form.save()
+                user = form.cleaned_data.get("email")
+                messages.success(request, "Account was created for " + user)
 
-    def post(self, request, format='json'):
-        serializer = CustomUserSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.save()
-            if user:
-                json = serializer.data
-                return Response(json, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                return redirect("login")
+
+        context = {"form": form}
+        return render(request, "accounts/register.html", context)
 
 
-class BlacklistTokenUpdateView(APIView):
-    permission_classes = [AllowAny]
-    authentication_classes = ()
+def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect("accounts:dashboard")
+    else:
+        if request.method == "POST":
+            email = request.POST.get("email")
+            password = request.POST.get("password")
 
-    def post(self, request):
-        try:
-            refresh_token = request.data["refresh_token"]
-            token = RefreshToken(refresh_token)
-            token.blacklist()
-            return Response(status=status.HTTP_205_RESET_CONTENT)
-        except Exception as e:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            user = authenticate(request, email=email, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect("accounts:dashboard")
+            else:
+                messages.info(request, "Username OR password is incorrect")
+
+        context = {}
+        return render(request, "accounts/login.html", context)
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect("accounts:login")
+
+
+@login_required(login_url="accounts:login")
+def home(request):
+    # orders = Order.objects.all()
+    # customers = Customer.objects.all()
+
+    # total_customers = customers.count()
+
+    # total_orders = orders.count()
+    # delivered = orders.filter(status='Delivered').count()
+    # pending = orders.filter(status='Pending').count()
+
+    # context = {'orders':orders, 'customers':customers,
+    # 'total_orders':total_orders,'delivered':delivered,
+    # 'pending':pending }
+
+    return render(request, "dashboard/dashboard.html")

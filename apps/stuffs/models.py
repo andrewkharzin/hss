@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django_measurement.models import MeasurementField
 from measurement.measures import Weight, Distance
+from simple_history.models import HistoricalRecords
 from apps.stuffs.uuid import BaseUUID
 
 # Create your models here.
@@ -42,6 +43,7 @@ class Aog(Staff):
     item_serial_number = None
     item_part_number = models.CharField(
         _("Part number"), max_length=20, blank=True, null=True)
+    item_history = HistoricalRecords()
 
     def __str__(self, *args):
         return f"{self.item} - {self.item_weight} | {self.item_part_number}"

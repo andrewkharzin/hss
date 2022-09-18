@@ -56,7 +56,7 @@ class AogService(BaseServiceRequest):
     description = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f" {self.service_name} / {self.service_date} / {self.aog_type.upper()} | {self.flight.upper()} | {self.agent}"
+        return f"{self.service_name}"
 
 
     def get_absolute_url(self):

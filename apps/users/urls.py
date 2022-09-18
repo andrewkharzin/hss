@@ -1,11 +1,12 @@
-# from django.urls import path
-# from .views import CustomUserCreate, BlacklistTokenUpdateView
+from django.urls import path
+from apps.users import views
 
-# app_name = 'users'
+app_name = 'users'
 
-# urlpatterns = [
-#     path('create/', CustomUserCreate.as_view(), name="create_user"),
-#     path('logout/blacklist/', BlacklistTokenUpdateView.as_view(),
-#          name='blacklist')
+urlpatterns = [
+    path('register/', views.registerPage, name="register"),
+	path('login/', views.loginPage, name="login"),  
+	path('logout/', views.logoutUser, name="logout"),
+	path('dashboard/', views.home, name="dashboard"),
 
-# ]
+]

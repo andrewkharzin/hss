@@ -1,10 +1,11 @@
 from django.contrib import admin
-from apps.profiles.models import Profile
-
+from apps.profiles.models import Profile, AirlineAgentProfile, ProvisorProfile
 
 
 
 admin.site.register(Profile)
+admin.site.register(AirlineAgentProfile)
+admin.site.register(ProvisorProfile)
 # class ProfileAdmin(admin.ModelAdmin):
 #     list_display = [
 #         'user',
