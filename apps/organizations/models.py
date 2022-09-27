@@ -7,6 +7,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 from apps.organizations.uuid import BaseUUID
+from urllib.parse import urlparse
 
 
 class Organization(BaseUUID):
@@ -15,6 +16,7 @@ class Organization(BaseUUID):
         _("Company Name"), max_length=50, default="Person Company LTD"
     )
     address = models.TextField()
+    country = models.CharField(_("Country"), max_length=65, default="")
     ogrn_number = models.CharField(_("ОГРН"), max_length=13)
     inn_number = models.CharField(_("ИНН"), max_length=10)
     kpp_number = models.CharField(_("КПП"), max_length=9)
@@ -25,6 +27,10 @@ class Organization(BaseUUID):
         null=True,
         blank=True,
     )
+    
+    def url_text(self):
+        parsed_url = urlparse(self.website)
+        return parsed_url.hostname.replace("http://.", "www.") + ""
 
     @property
     def thumbnail_preview(self):

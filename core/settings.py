@@ -54,7 +54,8 @@ THIRD_PARTY_APPS = [
     "simple_history",
     "widget_tweaks",
     "sweetify",
-    'django_tables2',
+    "django_tables2",
+     'mptt',
 ]
 
 PROJECT_APPS = [
@@ -67,6 +68,7 @@ PROJECT_APPS = [
     "apps.services",
     "apps.stuffs",
     "apps.organizations",
+    'apps.todo_app',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -144,7 +146,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://8000-andrewkharzin-hss-pq4jv1giif3.ws-eu64.gitpod.io"
+   "https://8000-andrewkharzin-hss-pq4jv1giif3.ws-eu67.gitpod.io"
 ]
 
 # Internationalization

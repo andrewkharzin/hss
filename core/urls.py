@@ -28,6 +28,8 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("", include("apps.users.urls", namespace="accounts")),
     path("", include("dashboard.urls", namespace="dashboard")),
+    path("", include("apps.profiles.urls")),
+    path("", include("apps.todo_app.urls", namespace="qnote"))
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

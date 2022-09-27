@@ -2173,6 +2173,7 @@
 					{% endblock %}
 					<!--end::Header-->
 					<!--begin::Content-->
+				
 					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 						<!--begin::Toolbar-->
 						{% block kt_toolbar %}
@@ -2180,16 +2181,10 @@
 						{% endblock %}
 						<!--end::Toolbar-->
 						<!--begin::Post-->
-						<div class="post d-flex flex-column-fluid" id="kt_post">
-							<!--begin::Container-->
-							<div id="kt_content_container" class="container-xxl">
-								<!--begin::Row-->
-								{% block content %}
-
-								{% endblock %}
-							</div>
-							<!--end::Container-->
-						</div>
+						{% block content %}
+						
+						{% endblock %}
+						
 						<!--end::Post-->
 					</div>
 					<!--end::Content-->

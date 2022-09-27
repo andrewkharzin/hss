@@ -8,15 +8,18 @@ from django.conf import settings
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from apps.profiles.uuid import BaseUUID
+from django.urls import reverse
+from pytils.translit import slugify
+from apps.organizations.models import Organization
 
 
-class Profile(BaseUUID):
+class Profile(models.Model):
     # class Meta:
     #     abstract = True
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=150, blank=True)
-    last_name = models.CharField(max_length=150, blank=True)
+    first_name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
     phone_number = models.CharField(
         _("Phone number"), max_length=12, null=True, blank=True
     )
@@ -28,8 +31,21 @@ class Profile(BaseUUID):
         _("User Image"),
         upload_to="uploads/users/profiles/%Y/%m/%d/",
         null=True,
-        blank=True,
+        blank=True, default='uploads/users/profiles/default.png'
     )
+    slug = models.SlugField(null=True, blank=True)
+    full_name = models.CharField( max_length=255)
+   
+    
+    def get_absolute_url(self, *args, **kw ):
+      return reverse('profile_settings', kwargs={'pk': self.pk})
+  
+    def save(self, *args, **kwargs): # new
+       
+        if not self.slug:
+            self.slug = slugify(self.phone_number)
+        return super( Profile, self).save(*args, **kwargs)
+
 
     @property
     def thumbnail_preview(self):
@@ -92,3 +108,10 @@ class ProvisorProfile(Profile):
 def create_user_profile(sender, instance, created, **kwargs):
     if created and instance.role == "PROVISOR":
         ProvisorProfile.objects.create(user=instance)
+        
+        
+class UserFullName(Profile):
+    class Meta: 
+        proxy = True 
+    def __unicode__(self): 
+        return self.get_full_name()
