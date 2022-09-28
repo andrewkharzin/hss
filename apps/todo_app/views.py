@@ -13,6 +13,7 @@ class ListListView(ListView):
     model = ToDoList
     template_name = "todo_app/index.html"
 
+
 class ItemListView(ListView):
     model = ToDoItem
     template_name = "todo_app/todo_list.html"
