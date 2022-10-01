@@ -55,7 +55,8 @@ THIRD_PARTY_APPS = [
     "widget_tweaks",
     "sweetify",
     "django_tables2",
-     'mptt',
+    'mptt',
+
 ]
 
 PROJECT_APPS = [

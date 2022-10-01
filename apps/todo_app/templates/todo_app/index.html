@@ -1,8 +1,35 @@
-{% extends 'theme/index.html' %}
+{% extends "dashboard/dashboard.html" %}
+{% block content %}
+<!--index.html-->
+{% if object_list %}
+<h3>All my lists</h3>
+{% endif %}
+<ul>
+    <div class="grid-wrapper">
+        {% for todolist in object_list %}
+            <div class="card card-flush h-md-50 mb-5 mb-xl-10">
+                <div class="card-header pt-5">
+                    <div class="card-title d-flex flex-column">
+                        <div class="grid-item fs-1hx fw-bold text-dark me-2 lh-1 ls-n2"
+                            role="button"
+                            onclick="location.href='{% url "qnote:list" todolist.id %}'">
+                            {{ todolist.title }}
+                        </div>
+                        <span class="text-gray-400 pt-1 fw-semibold fs-6">{{ todolist.category}}</span>
+                    </div>    
+                
+                </div>
+            </div>
+                {% empty %}
+                <h4>You have no lists!</h4>
+                <p>
+                    <input
+                    value="Add a new list"
+                    type="button"
+                    onclick="location.href='{% url "qnote:list-add" %}'"/>
+                </p>
+                {% endfor %}
+    </div>
+</ul>
 
-{% block content  %}
-
-
-sdhbcld
-
-{% endblock content  %}
+{% endblock %}

@@ -27,6 +27,7 @@
 		<!--begin::Global Stylesheets Bundle(used by all pages)-->
 		<link href="{% static 'assets/plugins/global/plugins.bundle.css' %}" rel="stylesheet" type="text/css" />
 		<link href="{% static 'assets/css/style.bundle.css' %}" rel="stylesheet" type="text/css" />
+		<link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
 	</head>
 	<!--end::Head-->
@@ -38,8 +39,135 @@
 		<!--layout-partial:layout/partials/_page-loader.html-->
 		<!--layout-partial:layout/_default.html-->
 		
+
+		<!--begin::App-->
+		<div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+			<!--begin::Page-->
+			<div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+				<!--layout-partial:layout/partials/_header.html-->
+				{% include 'dashboard/common/header.html' %}
+			
+				<!--begin::Wrapper-->
+				<div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+					<!--begin::Main-->
+					<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+						<!--begin::Content wrapper-->
+						<div class="d-flex flex-column flex-column-fluid">
+					
+						
+							<!--begin::Content-->
+							<div id="kt_app_content" class="app-content flex-column-fluid">
+								<!--begin::Content container-->
+								<div id="kt_app_content_container" class="app-container container-fluid">
+									{% block content %}
+									<!--begin::Row-->
+									<div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+										<!--begin::Col-->
+										<div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
+											
+											<!--layout-partial:partials/widgets/cards/_widget-7.html-->
+											_Content content_col
+											
+											
+											<!--layout-partial:partials/widgets/cards/_widget-20.html-->
+											<!--layout-partial:partials/widgets/cards/_widget-7.html-->
+											
+										</div>
+										<!--end::Col-->
+										<!--begin::Col-->
+										<div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
+											<!--layout-partial:partials/widgets/cards/_widget-17.html-->
+											<!--layout-partial:partials/widgets/lists/_widget-26.html-->
+											
+										</div>
+										<!--end::Col-->
+										<!--begin::Col-->
+										<div class="col-xxl-6">
+											<!--layout-partial:partials/widgets/engage/_widget-10.html-->
+										</div>
+										<!--end::Col-->
+									</div>
+									<!--end::Row-->
+									<!--begin::Row-->
+									<div class="row gx-5 gx-xl-10">
+										<!--begin::Col-->
+										<div class="col-xxl-6 mb-5 mb-xl-10">
+											<!--layout-partial:partials/widgets/charts/_widget-8.html-->
+										</div>
+										<!--end::Col-->
+										<!--begin::Col-->
+										<div class="col-xl-6 mb-5 mb-xl-10">
+											<!--layout-partial:partials/widgets/tables/_widget-16.html-->
+										</div>
+										<!--end::Col-->
+									</div>
+									<!--end::Row-->
+									<!--begin::Row-->
+									<div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+										<!--begin::Col-->
+										<div class="col-xxl-6">
+											<!--layout-partial:partials/widgets/cards/_widget-18.html-->
+										</div>
+										<!--end::Col-->
+										<!--begin::Col-->
+										<div class="col-xl-6">
+											<!--layout-partial:partials/widgets/charts/_widget-36.html-->
+										</div>
+										<!--end::Col-->
+									</div>
+									<!--end::Row-->
+									<!--begin::Row-->
+									<div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+										<!--begin::Col-->
+										<div class="col-xl-4">
+											<!--layout-partial:partials/widgets/charts/_widget-35.html-->
+										</div>
+										<!--end::Col-->
+										<!--begin::Col-->
+										<div class="col-xl-8">
+											<!--layout-partial:partials/widgets/tables/_widget-14.html-->
+										</div>
+										<!--end::Col-->
+									</div>
+									<!--end::Row-->
+									<!--begin::Row-->
+									<div class="row gx-5 gx-xl-10">
+										<!--begin::Col-->
+										<div class="col-xl-4">
+											<!--layout-partial:partials/widgets/charts/_widget-31.html-->
+										</div>
+										<!--end::Col-->
+										<!--begin::Col-->
+										<div class="col-xl-8">
+											<!--layout-partial:partials/widgets/charts/_widget-24.html-->
+										</div>
+										<!--end::Col-->
+									</div>
+									<!--end::Row-->
+									{% endblock content %}
+								</div>
+								<!--end::Content container-->
+							</div>
+							<!--end::Content-->
+							
+						</div>
+						<!--end::Content wrapper-->
+						{% block footer %}
+						
+						<!--layout-partial:layout/partials/_footer.html-->
+						{% include 'theme/layout/partials/_footer.html' %}
+						{% endblock footer %}
+					</div>
+					<!--end:::Main-->
+				</div>
+				<!--end::Wrapper-->
+			</div>
+			<!--end::Page-->
+		</div>
+		<!--end::App-->
+		<!--layout-partial:partials/_drawers.html-->
 		
-		{% include 'theme/layout/_default.html' %}
+		
 		
 		<!--layout-partial:partials/_scrolltop.html-->
 		<!--begin::Modals-->

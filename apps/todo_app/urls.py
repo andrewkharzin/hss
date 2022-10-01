@@ -1,7 +1,7 @@
 from django.urls import path
 
 from . import views
-from .views import ListListView, ItemListView
+from .views import ListListView, ItemListView, CategoryListView, ListByCategoryView
 
 app_name = "qnote"
 
@@ -13,4 +13,6 @@ urlpatterns = [
     path("qnotes/list/<int:list_id>/item/<int:pk>/", views.ItemUpdate.as_view(), name="item-update",),
     path("qnotes/list/<int:pk>/delete/", views.ListDelete.as_view(), name="list-delete"),
     path("qnotes/list/<int:list_id>/item/<int:pk>/delete/", views.ItemDelete.as_view(), name="item-delete", ),
+    path('qnotes/category', CategoryListView.as_view() , name='category-list'),
+    path('qnotes/category/<str:slug>/', ListByCategoryView.as_view() , name='category-detail'),
 ]

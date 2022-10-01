@@ -1,17 +1,49 @@
 
 from django.urls import reverse, reverse_lazy
-
+from django.views import generic
 from django.views.generic import (
     ListView,
     CreateView,
     UpdateView,
     DeleteView,
 )
-from .models import ToDoItem, ToDoList
+from .models import ToDoItem, ToDoList, Category
+
+
+class CategoryListView(generic.ListView):
+    model = Category
+    template_name = "todo_app/category_list.html"
+    
+class ListByCategoryView(generic.ListView):
+    ordering = 'id'
+    paginate_by = 10
+    template_name = 'todo_app/list_by_category.html'
+
+    def get_queryset(self):
+        # https://docs.djangoproject.com/en/3.1/topics/class-based-views/generic-display/#dynamic-filtering
+        # the following category will also be added to the context data
+        self.category = Category.objects.get(slug=self.kwargs['slug'])
+        queryset = ToDoList.objects.filter(category=self.category)
+         # need to set ordering to get consistent pagination results
+        queryset = queryset.order_by(self.ordering)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = self.category
+        return context    
 
 class ListListView(ListView):
     model = ToDoList
     template_name = "todo_app/index.html"
+    grid_wrapper = 'list-wrapper'
+    grid_template_columns = ['120px', '120px', '120px']
+    grid_template_areas = [
+        ['sidebar', 'content'],
+        ['sidebar', 'content'],
+        ['header', 'header']
+    ]
+    grid_gap = '10px'
 
 
 class ItemListView(ListView):
